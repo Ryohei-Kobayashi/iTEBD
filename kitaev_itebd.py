@@ -23,6 +23,10 @@ H_bond = [np.array( [[2*g/3,0,0,-J0], [0,0,-J0,0], [0,-J0,0,0], [-J0,0,0,-2*g/3]
 U=[]
 for i in range(3): 
     U.append(np.reshape(expm(-delta*H_bond[i]),(2,2,2,2)))
+    
+H=[]
+for i in range(3):
+    H.append(np.reshape(H_bond[i],(2,2,2,2)))
 
 # Perform the imaginary time evolution alternating on A, B and C bonds                                                                                                                              
 for step in range(0, N):
@@ -49,8 +53,8 @@ for step in range(0, N):
         
         # Obtain the new values for G and s #
         s[ia] = Y/invsq
-        X = np.tensordot(X,np.diag(s[ia]),axes=(1,1))
-        Z = np.tensordot(np.diag(s[ia]),Z,axes=(0,0))
+        X = np.tensordot(X,np.diag(s[ia]),axes=(1,0))
+        Z = np.tensordot(np.diag(s[ia]),Z,axes=(1,0))
         
         if ia == 1:
             X = np.reshape(X,(d,chib,chic,chi2))
@@ -75,7 +79,7 @@ E=[]
 for i in range(3):
     M = np.tensordot(G[0],np.diag(s[i+1]**(-1)),axes=(i+1,1))
     GM = np.tensordot(M,G[1],axes=(3,i+1))
-    C = np.tensordot(U[np.mod(i,3)],GM,axes=([2,3],[0,3]))
+    C = np.tensordot(H[np.mod(i,3)],GM,axes=([2,3],[0,3]))
     GM = np.conj(GM)
     E.append(np.squeeze(np.tensordot(GM,C,axes=([0,3,1,2,4,5],[0,1,2,3,4,5]))).item()) 
 print "E_iTEBD =", np.mean(E)
