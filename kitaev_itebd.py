@@ -16,9 +16,9 @@ for i in range(4):
     s.append(np.ones([1]))
 
 # Generate the two-site time evolution operator
-H_bond = [np.array( [[2*g/3,0,0,J0], [0,0,J0,0], [0,J0,0,0], [J0,0,0,-2*g/3]] ),
-          np.array( [[2*g/3,0,0,-J1], [0,0,J1,0], [0,J1,0,0], [-J1,0,0,-2*g/3]] ),
-          np.array( [[J2+2*g/3,0,0,0], [0,-J2,0,0], [0,0,-J2,0], [0,0,0,J2-2*g/3]] )]
+H_bond = [np.array( [[2*g/3,0,0,-J0], [0,0,-J0,0], [0,-J0,0,0], [-J0,0,0,-2*g/3]] ),
+          np.array( [[2*g/3,0,0,J1], [0,0,-J1,0], [0,-J1,0,0], [J1,0,0,-2*g/3]] ),
+          np.array( [[-J2+2*g/3,0,0,0], [0,J2,0,0], [0,0,J2,0], [0,0,0,-J2-2*g/3]] )]
 
 U=[]
 for i in range(3): 
